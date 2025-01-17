@@ -2,13 +2,16 @@ import { DirectClient } from "@elizaos/client-direct";
 import {
   AgentRuntime,
   elizaLogger,
+  ModelClass,
   settings,
   stringToUuid,
+  getModelSettings,
   type Character,
+  models,
 } from "@elizaos/core";
 import { bootstrapPlugin } from "@elizaos/plugin-bootstrap";
 import { createNodePlugin } from "@elizaos/plugin-node";
-import { solanaPlugin } from "@elizaos/plugin-solana";
+import { evmPlugin } from "./plugins/plugin-evm/src/index.ts";
 import fs from "fs";
 import net from "net";
 import path from "path";
@@ -23,6 +26,8 @@ import {
   parseArguments,
 } from "./config/index.ts";
 import { initializeDatabase } from "./database/index.ts";
+
+// elizaLogger.verbose = true;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,7 +63,7 @@ export function createAgent(
     plugins: [
       bootstrapPlugin,
       nodePlugin,
-      character.settings?.secrets?.WALLET_PUBLIC_KEY ? solanaPlugin : null,
+      evmPlugin,
     ].filter(Boolean),
     providers: [],
     actions: [],
@@ -91,11 +96,17 @@ async function startAgent(character: Character, directClient: DirectClient) {
 
     runtime.clients = await initializeClients(character, runtime);
 
-    directClient.registerAgent(runtime);
+    // directClient.registerAgent(runtime);
 
     // report to console
     elizaLogger.debug(`Started ${character.name} as ${runtime.agentId}`);
 
+    const modelClass = ModelClass.LARGE;
+    elizaLogger.info("settings", settings.LARGE_OPENAI_MODEL)
+    elizaLogger.info("UUU", runtime.modelProvider, modelClass);
+    const model = getModelSettings(runtime.modelProvider, modelClass);
+
+    elizaLogger.info("HOHOHO Selected model:", model.name);
     return runtime;
   } catch (error) {
     elizaLogger.error(
@@ -134,11 +145,11 @@ const startAgents = async () => {
   let charactersArg = args.characters || args.character;
   let characters = [character];
 
-  console.log("charactersArg", charactersArg);
+  // console.log("charactersArg", charactersArg);
   if (charactersArg) {
     characters = await loadCharacters(charactersArg);
   }
-  console.log("characters", characters);
+  // console.log("characters", characters);
   try {
     for (const character of characters) {
       await startAgent(character, directClient as DirectClient);
