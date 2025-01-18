@@ -86,6 +86,12 @@ export interface BridgeParams {
     toAddress?: Address;
 }
 
+export interface CalculateParams {
+    operation: 'percentage' | 'division' | 'multiplication' | 'sum' | 'subtraction';
+    value1: string;
+    value2: string;
+}
+
 // Plugin configuration
 export interface EvmPluginConfig {
     rpcUrl?: {

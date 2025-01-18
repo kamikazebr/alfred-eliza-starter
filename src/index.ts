@@ -5,7 +5,6 @@ import {
   ModelClass,
   settings,
   stringToUuid,
-  getModelSettings,
   type Character,
   models,
 } from "@elizaos/core";
@@ -27,7 +26,7 @@ import {
 } from "./config/index.ts";
 import { initializeDatabase } from "./database/index.ts";
 
-// elizaLogger.verbose = true;
+elizaLogger.verbose = true;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -96,17 +95,11 @@ async function startAgent(character: Character, directClient: DirectClient) {
 
     runtime.clients = await initializeClients(character, runtime);
 
-    // directClient.registerAgent(runtime);
+    directClient.registerAgent(runtime);
 
     // report to console
     elizaLogger.debug(`Started ${character.name} as ${runtime.agentId}`);
 
-    const modelClass = ModelClass.LARGE;
-    elizaLogger.info("settings", settings.LARGE_OPENAI_MODEL)
-    elizaLogger.info("UUU", runtime.modelProvider, modelClass);
-    const model = getModelSettings(runtime.modelProvider, modelClass);
-
-    elizaLogger.info("HOHOHO Selected model:", model.name);
     return runtime;
   } catch (error) {
     elizaLogger.error(

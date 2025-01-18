@@ -107,3 +107,23 @@ Respond with a JSON markdown block containing only the extracted values. Use nul
 }
 \`\`\`
 `;
+
+export const calculateTemplate = `Given the recent messages below:
+
+{{recentMessages}}
+
+Extract the following information about the requested calculation:
+- Operation type (percentage, division, multiplication, sum, or subtraction)
+- First value (must be a valid number)
+- Second value (must be a valid number)
+
+Respond with a JSON markdown block containing only the extracted values:
+
+\`\`\`json
+{
+    "operation": "percentage" | "division" | "multiplication" | "sum" | "subtraction",
+    "value1": string,
+    "value2": string
+}
+\`\`\`
+`;
