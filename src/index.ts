@@ -2,11 +2,9 @@ import { DirectClient } from "@elizaos/client-direct";
 import {
   AgentRuntime,
   elizaLogger,
-  ModelClass,
   settings,
   stringToUuid,
   type Character,
-  models,
 } from "@elizaos/core";
 import { bootstrapPlugin } from "@elizaos/plugin-bootstrap";
 import { createNodePlugin } from "@elizaos/plugin-node";

@@ -9,7 +9,8 @@
     "start:service:all": "pm2 start pnpm --name=\"all\" --restart-delay=3000 --max-restarts=10 -- run start:all",
     "stop:service:all": "pm2 stop all",
     "test": "vitest run",
-    "swap": "ts-node -r dotenv/config src/plugins/plugin-evm/src/scripts/executeSwap.ts"
+    "swap": "ts-node -r dotenv/config src/plugins/plugin-evm/src/scripts/executeSwap.ts",
+    "alfred": "tsc && node --loader ts-node/esm src/index.ts --characters=characters/alfred.character.json"
   },
   "dependencies": {
     "@elizaos/adapter-postgres": "0.1.7",
