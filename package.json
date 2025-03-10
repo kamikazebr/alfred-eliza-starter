@@ -9,14 +9,15 @@
     "start:service:all": "pm2 start pnpm --name=\"all\" --restart-delay=3000 --max-restarts=10 -- run start:all",
     "stop:service:all": "pm2 stop all",
     "test": "vitest run",
-    "swap": "ts-node -r dotenv/config src/plugins/plugin-evm/src/scripts/executeSwap.ts"
+    "swap": "ts-node -r dotenv/config src/plugins/plugin-evm/src/scripts/executeSwap.ts",
+    "alfred": "tsc && node --loader ts-node/esm src/index.ts --characters=characters/alfred.character.json"
   },
   "dependencies": {
     "@elizaos/adapter-postgres": "0.1.7",
     "@elizaos/adapter-sqlite": "0.1.7",
     "@elizaos/client-auto": "0.1.7",
     "@elizaos/client-direct": "0.1.7",
-    "@elizaos/core": "0.1.7",
+    "@elizaos/core": "file:../eliza/packages/core",
     "@elizaos/plugin-bootstrap": "0.1.7",
     "@elizaos/plugin-node": "0.1.7",
     "@elizaos/plugin-tee": "0.1.7",
@@ -45,7 +46,7 @@
     "overrides": {
       "onnxruntime-node": "1.20.0",
       "viem": "2.21.58",
-      "@elizaos/core": "0.1.7"
+      "@elizaos/core": "file:../eliza/packages/core"
     }
   },
   "devDependencies": {
